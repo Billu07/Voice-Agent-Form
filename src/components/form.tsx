@@ -120,10 +120,7 @@ export default function AutoliniumForm() {
         additionalNotes: formData.additionalNotes,
       };
 
-      const apiUrl =
-        import.meta.env.MODE === "development"
-          ? "http://localhost:3000/api/submit-form"
-          : "/api/submit-form";
+      const apiUrl = "/api/submit-form";
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -133,6 +130,23 @@ export default function AutoliniumForm() {
         body: JSON.stringify(submissionData),
       });
 
+      // Check if response is OK before trying to parse as JSON
+      if (!response.ok) {
+        // If response is not OK, get the text first to see what we're dealing with
+        const responseText = await response.text();
+        console.error("Server response:", responseText);
+        
+        // Try to parse as JSON, but if it fails, use the raw text
+        try {
+          const errorData = JSON.parse(responseText);
+          throw new Error(errorData.message || `Server error: ${response.status}`);
+        } catch (parseError) {
+          // If it's not JSON, it's probably an HTML error page
+          throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+        }
+      }
+
+      // If we get here, response is OK and we can parse as JSON
       const result = await response.json();
 
       if (response.ok) {
@@ -142,11 +156,21 @@ export default function AutoliniumForm() {
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert(
-        `Error submitting form: ${
-          error instanceof Error ? error.message : "Please try again."
-        }`
-      );
+      
+      // More specific error messages
+      if (error instanceof Error) {
+        if (error.message.includes("Failed to fetch")) {
+          alert("Cannot connect to server. Please check your internet connection and try again.");
+        } else if (error.message.includes("404")) {
+          alert("Server endpoint not found. The form submission service is currently unavailable.");
+        } else if (error.message.includes("500")) {
+          alert("Server error. Please try again later or contact support.");
+        } else {
+          alert(`Error submitting form: ${error.message}`);
+        }
+      } else {
+        alert("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }
