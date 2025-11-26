@@ -106,6 +106,20 @@ export default function AutoliniumForm() {
                 placeholder='{"type": "service_account", ...}'
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Sheet Name for Data Storage
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}storage-sheet`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}storage-sheet`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., Call Results, Agent Data"
+              />
+            </div>
           </div>
         );
       case "Podio":
@@ -113,7 +127,7 @@ export default function AutoliniumForm() {
           <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">
-                Client ID
+                Client ID *
               </label>
               <input
                 type="text"
@@ -122,11 +136,12 @@ export default function AutoliniumForm() {
                   handleInputChange(`${fieldId}client-id`, e.target.value)
                 }
                 className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your Podio Client ID"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">
-                Client Secret
+                Client Secret *
               </label>
               <input
                 type="password"
@@ -135,6 +150,49 @@ export default function AutoliniumForm() {
                   handleInputChange(`${fieldId}client-secret`, e.target.value)
                 }
                 className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your Podio Client Secret"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                App ID *
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}app-id`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}app-id`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your Podio App ID"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                API Endpoint for Data Pulling *
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}api-endpoint`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}api-endpoint`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="https://api.podio.com/..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Field Name for Data Storage
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}storage-field`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}storage-field`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., call_results, agent_data"
               />
             </div>
           </div>
@@ -155,6 +213,23 @@ export default function AutoliniumForm() {
                 className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Property Name for Data Storage
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}storage-property`] || ""}
+                onChange={(e) =>
+                  handleInputChange(
+                    `${fieldId}storage-property`,
+                    e.target.value
+                  )
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., call_summary, agent_notes"
+              />
+            </div>
           </div>
         );
       case "GoHighLevel (GHL)":
@@ -162,7 +237,35 @@ export default function AutoliniumForm() {
           <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">
-                API Key
+                Client ID *
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}client-id`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}client-id`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your GHL Client ID"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Client Secret *
+              </label>
+              <input
+                type="password"
+                value={formData[`${fieldId}client-secret`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}client-secret`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your GHL Client Secret"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                API Key *
               </label>
               <input
                 type="password"
@@ -171,6 +274,35 @@ export default function AutoliniumForm() {
                   handleInputChange(`${fieldId}api-key`, e.target.value)
                 }
                 className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your GHL API Key"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                API Endpoint for Data Pulling
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}api-endpoint`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}api-endpoint`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="https://rest.gohighlevel.com/..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Field Name for Data Storage
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}storage-field`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}storage-field`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., custom_field_1, call_notes"
               />
             </div>
           </div>
@@ -205,6 +337,20 @@ export default function AutoliniumForm() {
                 className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Object Field for Data Storage
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}storage-field`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}storage-field`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., Description, Call_Notes__c"
+              />
+            </div>
           </div>
         );
       case "Turnkey":
@@ -234,6 +380,20 @@ export default function AutoliniumForm() {
                   handleInputChange(`${fieldId}api-key`, e.target.value)
                 }
                 className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Field Name for Data Storage
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}storage-field`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}storage-field`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., results_field, agent_data"
               />
             </div>
           </div>
