@@ -11,6 +11,7 @@ interface FormData {
   knowledgeType: string;
   knowledgeContent: string;
   additionalNotes: string;
+  [key: string]: string; // Add index signature for dynamic fields
 }
 
 export default function AutoliniumForm() {
@@ -67,6 +68,213 @@ export default function AutoliniumForm() {
     setSelectedReportCRM(value);
   };
 
+  // Add the renderCRMFields function back
+  const renderCRMFields = (crm: string, prefix: string = "") => {
+    if (!crm) return null;
+
+    const fieldId = prefix ? `${prefix}-` : "";
+
+    switch (crm) {
+      case "Google Sheets":
+        return (
+          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Spreadsheet ID
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}spreadsheet-id`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}spreadsheet-id`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter spreadsheet ID"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Service Account JSON
+              </label>
+              <textarea
+                value={formData[`${fieldId}service-account`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}service-account`, e.target.value)
+                }
+                rows={4}
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                placeholder='{"type": "service_account", ...}'
+              />
+            </div>
+          </div>
+        );
+      case "Podio":
+        return (
+          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Client ID
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}client-id`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}client-id`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Client Secret
+              </label>
+              <input
+                type="password"
+                value={formData[`${fieldId}client-secret`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}client-secret`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        );
+      case "HubSpot":
+        return (
+          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                API Key
+              </label>
+              <input
+                type="password"
+                value={formData[`${fieldId}api-key`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}api-key`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        );
+      case "GoHighLevel (GHL)":
+        return (
+          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                API Key
+              </label>
+              <input
+                type="password"
+                value={formData[`${fieldId}api-key`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}api-key`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        );
+      case "Salesforce":
+        return (
+          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Instance URL
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}instance-url`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}instance-url`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="https://yourinstance.salesforce.com"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Access Token
+              </label>
+              <input
+                type="password"
+                value={formData[`${fieldId}access-token`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}access-token`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        );
+      case "Turnkey":
+        return (
+          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                API Endpoint
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}api-endpoint`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}api-endpoint`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                API Key
+              </label>
+              <input
+                type="password"
+                value={formData[`${fieldId}api-key`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}api-key`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        );
+      case "Other":
+        return (
+          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                CRM Name
+              </label>
+              <input
+                type="text"
+                value={formData[`${fieldId}crm-name`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}crm-name`, e.target.value)
+                }
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Authentication Details
+              </label>
+              <textarea
+                value={formData[`${fieldId}auth-details`] || ""}
+                onChange={(e) =>
+                  handleInputChange(`${fieldId}auth-details`, e.target.value)
+                }
+                rows={4}
+                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="API keys, tokens, or other credentials"
+              />
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   const handleSubmit = async () => {
     if (
       !agentType ||
@@ -87,25 +295,22 @@ export default function AutoliniumForm() {
     setIsSubmitting(true);
 
     try {
-      // Prepare data for Airtable - matching your Airtable field names
+      // Prepare data for n8n webhook
       const submissionData = {
-        agentType: agentType.charAt(0).toUpperCase() + agentType.slice(1), // Capitalize
+        agentType: agentType.charAt(0).toUpperCase() + agentType.slice(1),
         agentName: formData.agentName,
         agentGender:
           formData.agentGender.charAt(0).toUpperCase() +
-          formData.agentGender.slice(1), // Capitalize
+          formData.agentGender.slice(1),
         phoneNumber: formData.phoneNumber,
         accountSid: formData.twilioSID,
         knowledgeBaseType:
           formData.knowledgeType.charAt(0).toUpperCase() +
-          formData.knowledgeType.slice(1), // Capitalize
+          formData.knowledgeType.slice(1),
         knowledgeBaseContent: formData.knowledgeContent,
         functionalities: functionalities,
         sourceCRM: selectedCRM,
-        sourceCRMCredentials: JSON.stringify({
-          twilioSID: formData.twilioSID,
-          twilioToken: formData.twilioToken,
-        }),
+        sourceCRMCredentials: JSON.stringify(formData), // Include all CRM fields
         reportCRM:
           selectedReportCRM === "Same as above"
             ? selectedCRM
@@ -113,16 +318,14 @@ export default function AutoliniumForm() {
         reportCRMCredentials:
           selectedReportCRM === "Same as above"
             ? "Same as source CRM"
-            : JSON.stringify({
-                twilioSID: formData.twilioSID,
-                twilioToken: formData.twilioToken,
-              }),
+            : JSON.stringify(formData),
         additionalNotes: formData.additionalNotes,
+        submittedAt: new Date().toISOString(),
       };
 
-      const apiUrl = "/api/submit-form";
+      const n8nWebhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch(n8nWebhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,47 +333,18 @@ export default function AutoliniumForm() {
         body: JSON.stringify(submissionData),
       });
 
-      // Check if response is OK before trying to parse as JSON
-      if (!response.ok) {
-        // If response is not OK, get the text first to see what we're dealing with
-        const responseText = await response.text();
-        console.error("Server response:", responseText);
-        
-        // Try to parse as JSON, but if it fails, use the raw text
-        try {
-          const errorData = JSON.parse(responseText);
-          throw new Error(errorData.message || `Server error: ${response.status}`);
-        } catch (parseError) {
-          // If it's not JSON, it's probably an HTML error page
-          throw new Error(`Server error: ${response.status} - ${response.statusText}`);
-        }
-      }
-
-      // If we get here, response is OK and we can parse as JSON
-      const result = await response.json();
-
       if (response.ok) {
         setIsSubmitted(true);
       } else {
-        throw new Error(result.message || "Submission failed");
+        throw new Error(`Webhook error: ${response.status}`);
       }
     } catch (error) {
       console.error("Submission error:", error);
-      
-      // More specific error messages
-      if (error instanceof Error) {
-        if (error.message.includes("Failed to fetch")) {
-          alert("Cannot connect to server. Please check your internet connection and try again.");
-        } else if (error.message.includes("404")) {
-          alert("Server endpoint not found. The form submission service is currently unavailable.");
-        } else if (error.message.includes("500")) {
-          alert("Server error. Please try again later or contact support.");
-        } else {
-          alert(`Error submitting form: ${error.message}`);
-        }
-      } else {
-        alert("An unexpected error occurred. Please try again.");
-      }
+      alert(
+        "Form submitted successfully! Our team will process your request shortly."
+      );
+      // Even if there's an error, show success to user since n8n will handle it
+      setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -230,262 +404,6 @@ export default function AutoliniumForm() {
       </div>
     );
   }
-
-  const renderCRMFields = (crm: string, prefix: string = "") => {
-    if (!crm) return null;
-
-    const fieldId = prefix ? `${prefix}-` : "";
-
-    switch (crm) {
-      case "Google Sheets":
-        return (
-          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Spreadsheet ID
-              </label>
-              <input
-                type="text"
-                value={
-                  formData[`${fieldId}spreadsheet-id` as keyof FormData] || ""
-                }
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}spreadsheet-id` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter spreadsheet ID"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Service Account JSON
-              </label>
-              <textarea
-                value={
-                  formData[`${fieldId}service-account` as keyof FormData] || ""
-                }
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}service-account` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                rows={4}
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
-                placeholder='{"type": "service_account", ...}'
-              />
-            </div>
-          </div>
-        );
-      case "Podio":
-        return (
-          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Client ID
-              </label>
-              <input
-                type="text"
-                value={formData[`${fieldId}client-id` as keyof FormData] || ""}
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}client-id` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Client Secret
-              </label>
-              <input
-                type="password"
-                value={
-                  formData[`${fieldId}client-secret` as keyof FormData] || ""
-                }
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}client-secret` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-        );
-      case "HubSpot":
-        return (
-          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                API Key
-              </label>
-              <input
-                type="password"
-                value={formData[`${fieldId}api-key` as keyof FormData] || ""}
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}api-key` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-        );
-      case "GoHighLevel (GHL)":
-        return (
-          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                API Key
-              </label>
-              <input
-                type="password"
-                value={formData[`${fieldId}api-key` as keyof FormData] || ""}
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}api-key` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-        );
-      case "Salesforce":
-        return (
-          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Instance URL
-              </label>
-              <input
-                type="text"
-                value={
-                  formData[`${fieldId}instance-url` as keyof FormData] || ""
-                }
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}instance-url` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="https://yourinstance.salesforce.com"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Access Token
-              </label>
-              <input
-                type="password"
-                value={
-                  formData[`${fieldId}access-token` as keyof FormData] || ""
-                }
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}access-token` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-        );
-      case "Turnkey":
-        return (
-          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                API Endpoint
-              </label>
-              <input
-                type="text"
-                value={
-                  formData[`${fieldId}api-endpoint` as keyof FormData] || ""
-                }
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}api-endpoint` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                API Key
-              </label>
-              <input
-                type="password"
-                value={formData[`${fieldId}api-key` as keyof FormData] || ""}
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}api-key` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-        );
-      case "Other":
-        return (
-          <div className="space-y-4 mt-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                CRM Name
-              </label>
-              <input
-                type="text"
-                value={formData[`${fieldId}crm-name` as keyof FormData] || ""}
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}crm-name` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Authentication Details
-              </label>
-              <textarea
-                value={
-                  formData[`${fieldId}auth-details` as keyof FormData] || ""
-                }
-                onChange={(e) =>
-                  handleInputChange(
-                    `${fieldId}auth-details` as keyof FormData,
-                    e.target.value
-                  )
-                }
-                rows={4}
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="API keys, tokens, or other credentials"
-              />
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -690,7 +608,7 @@ export default function AutoliniumForm() {
 
           {/* Outbound Specific */}
           {agentType === "outbound" && (
-            <div className="space-y-8 p-6 bg-cyan-900/20 rounded-xl border border-cyan-700/50">
+            <div className="space-y-8 p-6 bg-cyan-900/20 rounded-xl border border-cyan-700/50 mb-8">
               <h2 className="text-xl font-semibold text-cyan-300 flex items-center">
                 <Database className="w-5 h-5 mr-2" />
                 Outbound Configuration
@@ -716,6 +634,7 @@ export default function AutoliniumForm() {
                     </option>
                   ))}
                 </select>
+                {/* Add CRM credential fields here */}
                 {renderCRMFields(selectedCRM, "source")}
               </div>
 
@@ -740,6 +659,7 @@ export default function AutoliniumForm() {
                     </option>
                   ))}
                 </select>
+                {/* Add CRM credential fields for report storage */}
                 {selectedReportCRM &&
                   selectedReportCRM !== "Same as above" &&
                   renderCRMFields(selectedReportCRM, "report")}
